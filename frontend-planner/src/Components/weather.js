@@ -1,4 +1,4 @@
-import React, {Components} from 'react'
+import React, {Component} from 'react'
 import styled from "styled-components";
 let currentTemp =0;
 
@@ -43,8 +43,12 @@ let queryURL = `https://api.openweathermap.org/data/2.5/weather?q=livermore&unit
 // let queryURL = `http://api.openweathermap.org/data/2.5/weather?q=${zipCode},US&APPID=${APIKey}`;
 
 
-
-const Weather =() => {
+class Weather extends Component {
+  constructor(props){
+    super(props)
+  }  
+  render(){
+    let { temperature } = this.props
     return (
         <WeatherBox>
             <form>
@@ -52,12 +56,14 @@ const Weather =() => {
                 <Button>Add Location</Button>
             </form>
             <h4>Weather conditions in: <span id="weatherLocationTarget"></span></h4>
-            <p id= "tempTargetParagraph">Current Temp: {currentTemp}<span id="tempTarget"></span></p>
+            <p id= "tempTargetParagraph">Current Temp: {temperature}
+            <span id="tempTarget"></span></p>
             <p id = "maxTempTargetParagraph">Max Temp: <span id="maxTempTarget"></span></p>
             <p id="minTempTargetParagraph">Min Temp: <span id="minTempTarget"></span></p>
         </WeatherBox>
 
     )
+  }
 }
 
 // fetch(queryURL).then(function(response) {

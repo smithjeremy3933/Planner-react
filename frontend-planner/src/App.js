@@ -36,30 +36,44 @@ class App extends Component {
   constructor (props) {
     super(props);
     this.state = {
-      temperature: undefined,
-      zipcode: undefined
+      temperature: 0
     }
   }
 
-  getWeather =() => {
-    fetch(queryURL).then(function(response) {
+  // getWeather =() => {
+  //   fetch(queryURL).then(function(response) {
+  //     return response.json();
+  //   }).then(function(data) {
+  //       console.log(data);
+  //       console.log(data.main.temp);
+  //       // currentTemp= data.main.temp;
+  //       // this.setState({temperature: this.state.currentTemp})
+  //   });
+  // }
+
+  componentDidMount() {
+    let queryURL = `https://api.openweathermap.org/data/2.5/weather?q=livermore&units=imperial&appid=${APIKey}`;
+
+    fetch(queryURL).then((response) => {
       return response.json();
-    }).then(function(data) {
-        console.log(data);
-        console.log(data.main.temp);
-        // currentTemp= data.main.temp;
-        // this.setState({temperature: this.state.currentTemp})
-    });
+    }).then((data) => {
+        //console.log(data);
+        //console.log(data.main.temp);
+        this.setState({ temperature: data.main})
+    });    
   }
 
   render() {
+    let { temp } = this.state.temperature;
+    console.log(this.state.temperature);
     return (
       <div>
         <Container>
           <TopContainer>
             <Time/>
             <Quotes/>
-            <Weather/>
+          
+             <Weather temperature={temp}/> 
           </TopContainer>
           {/* <FullCalender/> */}
           <MidContainer>
@@ -72,7 +86,6 @@ class App extends Component {
   }
 }
 
-let queryURL = `https://api.openweathermap.org/data/2.5/weather?q=livermore&units=imperial&appid=${APIKey}`;
 
 // fetch(queryURL).then(function(response) {
 //   return response.json();
