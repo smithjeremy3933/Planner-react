@@ -8,7 +8,10 @@ const QuotesBox = styled.div`
   line-height:  ${props => props.lineHeight || "1px"};
   height: ${props => props.height || ""};
   width: ${props => props.width || ""};
-  background-color: white;
+  background: rgba(0, 180, 180, 0.8);
+  border: 5px;
+  border-color: grey;
+  border-style: solid;
   border-radius: ${props => props.borderRadius || "30px"};
   padding: ${props => props.padding || "0px"}
 `

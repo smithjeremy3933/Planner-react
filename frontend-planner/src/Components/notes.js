@@ -1,4 +1,4 @@
-import React, {Components} from 'react'
+import React, {Component} from 'react'
 import styled from "styled-components";
 
 const NotesBox = styled.div`
@@ -13,12 +13,25 @@ const NotesBox = styled.div`
   padding: ${props => props.padding || "0px"}
 `
 
-const Notes = () => {
-    return (
-        <NotesBox>
-            <h1>Notes</h1>
-        </NotesBox>
-    )
+class Notes extends Component {
+    constructor(props) {
+        super(props)
+    }
+    render () {
+        let {plannerNotes} = this.props;
+        return (
+            <NotesBox>
+            <h1>{plannerNotes}</h1>
+            </NotesBox>
+
+    // <ul>{this.state.plannerNotes.map((notesData) => {
+    //     `               return <li key={notesData.note}>{notesData.note}</li>`
+    //                 })}
+    //                 </ul>
+        )
+    
+    }
+    
 }
 
 export default Notes;

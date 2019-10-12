@@ -11,18 +11,21 @@ const WeatherBox= styled.div`
   line-height:  ${props => props.lineHeight || "1px"};
   height: ${props => props.height || "200px"};
   width: ${props => props.width || "200px"};
-  background-color: white;
+  background: rgba(0, 180, 180, 0.8);
   border-radius: ${props => props.borderRadius || "30px"};
   padding: ${props => props.padding || "0px"}
+  border: 5px;
+  border-color: grey;
+  border-style: solid;
 `
 
 const Button = styled.button`
-  background-color: ${props => props.color || "red"};
+  background-color: ${props => props.color || "teal"};
   color: white;
   border-radius ${props => props.borderRadius || "15px"};
   height: 30px;
   width: 100px;
-  margin: 0 auto;
+  margin: 2px;
   &:hover {
     opacity:0.9;
   }
@@ -35,7 +38,18 @@ const Button = styled.button`
 const Input = styled.input`
   border-radius ${props => props.borderRadius || "15px"};
   height: 30px;
-  width: 100px;
+  width: 80px;
+  margin: 2px;
+`
+
+const WeatherData = styled.p`
+  margin: 3px;
+  line-height: 6px;
+  &:hover {
+    opacity:0.9;
+    background-color: yellow;
+    height: 10px;
+  }
 `
 
 let APIKey = "182a37ebeb5560c2e6ed0dfd20d50298";
@@ -48,31 +62,27 @@ class Weather extends Component {
     super(props)
   }  
   render(){
+    let { cityName } = this.props
     let { temperature } = this.props
+    let { maxTemperature } = this.props
+    let { minTemperature } = this.props
     return (
         <WeatherBox>
+            <h3>Weather</h3>
             <form>
                 <Input type="text" name="zipcode"></Input>
                 <Button>Add Location</Button>
             </form>
-            <h4>Weather conditions in: <span id="weatherLocationTarget"></span></h4>
-            <p id= "tempTargetParagraph">Current Temp: {temperature}
-            <span id="tempTarget"></span></p>
-            <p id = "maxTempTargetParagraph">Max Temp: <span id="maxTempTarget"></span></p>
-            <p id="minTempTargetParagraph">Min Temp: <span id="minTempTarget"></span></p>
+            <h4>{cityName}</h4>
+            <WeatherData id= "tempTargetParagraph">Current Temp: {temperature + "°F"}</WeatherData>
+            <hr></hr>
+            <WeatherData id = "maxTempTargetParagraph">Max Temp: {maxTemperature + "°F"}</WeatherData>
+            <hr></hr>
+            <WeatherData id="minTempTargetParagraph">Min Temp: {minTemperature + "°F"}</WeatherData>
         </WeatherBox>
 
     )
   }
 }
-
-// fetch(queryURL).then(function(response) {
-//   return response.json();
-// }).then(function(data) {
-//     console.log(data);
-//     console.log(data.main.temp);
-//     currentTemp= data.main.temp;
-// });
-
 
 export default Weather;

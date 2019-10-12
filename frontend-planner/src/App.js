@@ -5,7 +5,8 @@ import Time from "./Components/time"
 import Quotes from "./Components/quotes";
 import Weather from "./Components/weather";
 import ToDos from "./Components/todos";
-import Notes from "./Components/notes"
+import Notes from "./Components/notes";
+import Navbar from "./Components/navbar";
 // import FullCalender from "./Components/calender"
 import styled from "styled-components";
 let APIKey = "182a37ebeb5560c2e6ed0dfd20d50298";
@@ -36,20 +37,13 @@ class App extends Component {
   constructor (props) {
     super(props);
     this.state = {
-      temperature: 0
+      temperature: 0,
+      maxTemperature: 0,
+      minTemperature: 0,
+      cityName: "",
+      plannerNotes: []
     }
   }
-
-  // getWeather =() => {
-  //   fetch(queryURL).then(function(response) {
-  //     return response.json();
-  //   }).then(function(data) {
-  //       console.log(data);
-  //       console.log(data.main.temp);
-  //       // currentTemp= data.main.temp;
-  //       // this.setState({temperature: this.state.currentTemp})
-  //   });
-  // }
 
   componentDidMount() {
     let queryURL = `https://api.openweathermap.org/data/2.5/weather?q=livermore&units=imperial&appid=${APIKey}`;
@@ -58,40 +52,55 @@ class App extends Component {
       return response.json();
     }).then((data) => {
         //console.log(data);
-        //console.log(data.main.temp);
-        this.setState({ temperature: data.main})
-    });    
+        console.log(data.name);
+        this.setState({ 
+          temperature: data.main,
+          maxTemperature: data.main,
+          minTemperature: data.main,
+          cityName: data,
+        })
+    });   
+    
+    fetch("http://localhost:8080/api/all")
+    .then((res) => {
+      return res.json()
+    }).then((noteData) => {
+      console.log("note", noteData);
+      console.log(noteData[0].note)
+      this.setState({ 
+        plannerNotes: noteData
+      })
+    })
   }
 
   render() {
     let { temp } = this.state.temperature;
+    let { temp_max } = this.state.maxTemperature;
+    let { temp_min } = this.state.minTemperature;
+    let { name } = this.state.cityName;
     console.log(this.state.temperature);
+    // for (let i= 0; i<this.state.plannerNotes.length; i++) {
+    //   console.log(this.state.plannerNotes[i])
+    // };
+    let { notes } = this.state.plannerNotes
     return (
       <div>
+        <Navbar/>
         <Container>
           <TopContainer>
             <Time/>
             <Quotes/>
-          
-             <Weather temperature={temp}/> 
+             <Weather temperature={temp} maxTemperature={temp_max} minTemperature={temp_min} cityName={name}/> 
           </TopContainer>
           {/* <FullCalender/> */}
           <MidContainer>
             <ToDos/>
-            <Notes/>
+            <Notes plannerNotes={notes}/>
 >          </MidContainer>
         </Container>
       </div>
     )
   }
 }
-
-
-// fetch(queryURL).then(function(response) {
-//   return response.json();
-// }).then(function(data) {
-//     console.log(data);
-//     console.log(data.main.temp);
-// });
 
 export default App;
