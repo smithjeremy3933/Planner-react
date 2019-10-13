@@ -7,6 +7,13 @@ const PORT = process.env.PORT || 8080;
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
+
+
 app.listen(PORT, function() {
   console.log("App listening on PORT: " + PORT);
 });
@@ -39,4 +46,19 @@ app.get("/api/all", cors(), (req, res) => {
       res.json(result);
     });
 });
-  
+
+
+
+app.post("/api/new", cors(), function(req, res) {
+  console.log(req.body);
+
+
+  //res.end()
+  // var dbQuery = "INSERT INTO Notes (note) VALUES (?)";
+
+  //  connection.query(dbQuery, [req.body.note], function(err, result) {
+  //    if (err) throw err;
+  //    console.log("Note Successfully Saved!");
+  //    res.end();
+  //  });
+});

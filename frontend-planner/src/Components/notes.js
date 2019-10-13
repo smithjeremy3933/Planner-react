@@ -8,26 +8,66 @@ const NotesBox = styled.div`
   line-height:  ${props => props.lineHeight || "1px"};
   height: ${props => props.height || "500px"};
   width: ${props => props.width || "300px"};
-  background-color: white;
+  background: rgba(0, 180, 180, 0.8);
   border-radius: ${props => props.borderRadius || "30px"};
   padding: ${props => props.padding || "0px"}
+  border: 5px;
+  border-color: grey;
+  border-style: solid;
 `
 
 class Notes extends Component {
     constructor(props) {
         super(props)
     }
+
+    state = {
+        note: "" 
+    }
+
+    handleSubmit = (event) => {
+        event.preventDefault();
+        let newNote ={
+            note: this.state.note
+        }
+        console.log(newNote);
+        fetch("http://localhost:8080/api/new", {
+            body: JSON.stringify({ note: this.state.note }),
+            method: "POST",
+            headers: { 
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+              }
+          }).then((response) => {
+            return response.json();
+          }).then((data) => {
+            console.log("Completed");
+          });
+            // // On success, run the following code
+            // .then(function() {
+        
+            //    alert("yay");
+        
+            // });
+    }
     render () {
         let {plannerNotes} = this.props;
         return (
             <NotesBox>
-            <h1>{plannerNotes}</h1>
+                <form >
+                    <label>new note</label>
+                    <input id="newNotes" type="text" value = {this.state.note} onChange = {e=>{this.setState({note:e.target.value})}}></input>
+                    <button onClick={this.handleSubmit}>submit</button>
+                </form>
+                {plannerNotes.map(note=>{
+                    return(
+                        <h1 key = {note.id}>
+                            {note.note}
+                        </h1>
+                    )
+                })}
             </NotesBox>
-
-    // <ul>{this.state.plannerNotes.map((notesData) => {
-    //     `               return <li key={notesData.note}>{notesData.note}</li>`
-    //                 })}
-    //                 </ul>
+     
         )
     
     }

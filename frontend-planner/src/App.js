@@ -72,7 +72,7 @@ class App extends Component {
       })
     })
   }
-
+  
   render() {
     let { temp } = this.state.temperature;
     let { temp_max } = this.state.maxTemperature;
@@ -80,10 +80,11 @@ class App extends Component {
     let { name } = this.state.cityName;
     console.log(this.state.temperature);
     // for (let i= 0; i<this.state.plannerNotes.length; i++) {
-    //   console.log(this.state.plannerNotes[i])
-    // };
-    let { notes } = this.state.plannerNotes
-    return (
+      //   console.log(this.state.plannerNotes[i])
+      // };
+      let  notes  = this.state.plannerNotes
+      return (
+        console.log(this.state.plannerNotes, "here's the state boii"),
       <div>
         <Navbar/>
         <Container>
@@ -95,6 +96,11 @@ class App extends Component {
           {/* <FullCalender/> */}
           <MidContainer>
             <ToDos/>
+            {/* {this.state.plannerNotes.map(note=>{
+              return(
+                <Notes plannerNotes = {note.note} key = {note.id} />
+              )
+            })} */}
             <Notes plannerNotes={notes}/>
 >          </MidContainer>
         </Container>
