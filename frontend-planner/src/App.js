@@ -68,7 +68,7 @@ class App extends Component {
       return res.json()
     }).then((noteData) => {
       console.log("note", noteData);
-      console.log(noteData[0].note)
+      // console.log(noteData[0].note)
       this.setState({ 
         plannerNotes: noteData
       })
@@ -81,7 +81,6 @@ class App extends Component {
       console.log("quote", quotesData);
       this.setState({ 
         selectedQuotes: quotesData
-        
       })
     })
   }
