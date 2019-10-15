@@ -24,7 +24,7 @@ var connection = mysql.createConnection({
     host: "localhost",
     port: 3306,
     user: "root",
-    password: "Shifty526",
+    password: "Micah1431$",
     database: "plannerDB"
   });
   
@@ -69,3 +69,13 @@ app.post("/api/new", cors(), function(req, res) {
      res.end();
    });
 });
+
+app.post("/api/delete", cors(), function(req, res){
+  console.log(req.body);
+  var dbQuery = "DELETE FROM Notes WHERE id=(?)";
+  connection.query(dbQuery, [req.body.id], function(err, result) {
+    if (err) throw err;
+    console.log("Note Successfully !");
+    res.end();
+  });
+})
