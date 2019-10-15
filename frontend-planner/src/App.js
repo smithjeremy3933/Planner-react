@@ -66,12 +66,23 @@ class App extends Component {
       return res.json()
     }).then((noteData) => {
       console.log("note", noteData);
-      console.log(noteData[0].note)
+      // console.log(noteData[0].note)
       this.setState({ 
         plannerNotes: noteData
       })
     })
-  }
+
+  fetch("http://localhost:8080/api/todos")
+  .then((res) => {
+    return res.json()
+  }).then((toDoData) => {
+    console.log("toDo", toDoData);
+    console.log(toDoData[0].note)
+    this.setState({ 
+      toDoNotes: toDoData
+    })
+  })
+}
 
   render() {
     let { temp } = this.state.temperature;
