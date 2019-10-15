@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import Time from "./Components/time"
@@ -9,6 +9,8 @@ import Notes from "./Components/notes";
 import Navbar from "./Components/navbar";
 // import FullCalender from "./Components/calender"
 import styled from "styled-components";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
+import DatePicker from "./Components/DatePicker";
 let APIKey = "182a37ebeb5560c2e6ed0dfd20d50298";
 const Container = styled.section`
   display: grid;
@@ -34,7 +36,7 @@ const MidContainer = styled.section`
 `
 
 class App extends Component {
-  constructor (props) {
+  constructor(props) {
     super(props);
     this.state = {
       temperature: 0,
@@ -53,39 +55,39 @@ class App extends Component {
     fetch(queryURL).then((response) => {
       return response.json();
     }).then((data) => {
-        //console.log(data);
-        console.log(data.name);
-        this.setState({ 
-          temperature: data.main,
-          maxTemperature: data.main,
-          minTemperature: data.main,
-          cityName: data,
-        })
-    });   
-    
-    fetch("http://localhost:8080/api/all")
-    .then((res) => {
-      return res.json()
-    }).then((noteData) => {
-      console.log("note", noteData);
-      console.log(noteData[0].note)
-      this.setState({ 
-        plannerNotes: noteData
+      //console.log(data);
+      console.log(data.name);
+      this.setState({
+        temperature: data.main,
+        maxTemperature: data.main,
+        minTemperature: data.main,
+        cityName: data,
       })
     });
 
+    fetch("http://localhost:8080/api/all")
+      .then((res) => {
+        return res.json()
+      }).then((noteData) => {
+        console.log("note", noteData);
+        console.log(noteData[0].note)
+        this.setState({
+          plannerNotes: noteData
+        })
+      });
+
     fetch("http://localhost:8080/api/quotes/all")
-    .then((res) => {
-      return res.json()
-    }).then((quotesData) => {
-      console.log("quote", quotesData);
-      this.setState({ 
-        selectedQuotes: quotesData
-        
+      .then((res) => {
+        return res.json()
+      }).then((quotesData) => {
+        console.log("quote", quotesData);
+        this.setState({
+          selectedQuotes: quotesData
+
+        })
       })
-    })
   }
-  
+
   render() {
     let { temp } = this.state.temperature;
     let { temp_max } = this.state.maxTemperature;
@@ -97,26 +99,33 @@ class App extends Component {
     let selectedQuotes = this.state.selectedQuotes
     console.log(this.state.quotesData)
     // for (let i= 0; i<this.state.plannerNotes.length; i++) {
-      //   console.log(this.state.plannerNotes[i])
-      // };
-      let  notes  = this.state.plannerNotes
-      return (
-        console.log(this.state.plannerNotes, "here's the state boii"),
-        
+    //   console.log(this.state.plannerNotes[i])
+    // };
+    let notes = this.state.plannerNotes
+    return (
+      console.log(this.state.plannerNotes, "here's the state boii"),
+
       <div>
-        <Navbar/>
-        <Container>
-          <TopContainer>
-            <Time/>
-            <Quotes />
-             <Weather temperature={temp} maxTemperature={temp_max} minTemperature={temp_min} cityName={name}/> 
-          </TopContainer>
-          {/* <FullCalender/> */}
-          <MidContainer>
-            <ToDos/>
-            <Notes plannerNotes={notes}/>
->          </MidContainer>
-        </Container>
+        <BrowserRouter>
+            <Navbar />
+          <Switch>
+            <Route exact path="/">
+              <Container>
+                <TopContainer>
+                  <Time />
+                  <Quotes />
+                  <Weather temperature={temp} maxTemperature={temp_max} minTemperature={temp_min} cityName={name} />
+                </TopContainer>
+                {/* <FullCalender/> */}
+                <MidContainer>
+                  <ToDos />
+                  <Notes plannerNotes={notes} />
+                  >          </MidContainer>
+              </Container>
+            </Route>
+            <Route path="/datepicker" component={DatePicker} />
+          </Switch>
+        </BrowserRouter>
       </div>
     )
   }
