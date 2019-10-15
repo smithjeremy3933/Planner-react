@@ -68,17 +68,18 @@ class Weather extends Component {
     let { minTemperature } = this.props
     return (
         <WeatherBox>
-            <h3>Weather</h3>
+            <h5>Weather</h5>
             <form>
                 <Input type="text" name="zipcode"></Input>
-                <Button>Add Location</Button>
+                <Button>New</Button>
             </form>
-            <h4>{cityName}</h4>
+            <h6>{cityName}</h6>
             <WeatherData id= "tempTargetParagraph">Current Temp: {temperature + "°F"}</WeatherData>
             <hr></hr>
             <WeatherData id = "maxTempTargetParagraph">Max Temp: {maxTemperature + "°F"}</WeatherData>
             <hr></hr>
             <WeatherData id="minTempTargetParagraph">Min Temp: {minTemperature + "°F"}</WeatherData>
+         
         </WeatherBox>
 
     )

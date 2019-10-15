@@ -1,4 +1,4 @@
-import React, {Components} from 'react'
+import React, {Component} from 'react'
 import styled from "styled-components";
 
 const QuotesBox = styled.div`
@@ -16,12 +16,22 @@ const QuotesBox = styled.div`
   padding: ${props => props.padding || "0px"}
 `
 
-const Quotes = (props) => {
+class Quotes extends Component {
+    constructor (props) {
+        super(props);
+    }
+    state= {
+        quotes: ""
+    }
+    render() {
+
+    let {selectedQuotes} = this.props;
     return(
         <QuotesBox>
             <h2>Quote: <span id="quotesTarget"></span></h2>
         </QuotesBox>
     )
+    }
 }
 
 export default Quotes;

@@ -41,7 +41,9 @@ class App extends Component {
       maxTemperature: 0,
       minTemperature: 0,
       cityName: "",
-      plannerNotes: []
+      plannerNotes: [],
+      quotes: [],
+      quote: ""
     }
   }
 
@@ -70,6 +72,17 @@ class App extends Component {
       this.setState({ 
         plannerNotes: noteData
       })
+    });
+
+    fetch("http://localhost:8080/api/quotes/all")
+    .then((res) => {
+      return res.json()
+    }).then((quotesData) => {
+      console.log("quote", quotesData);
+      this.setState({ 
+        selectedQuotes: quotesData
+        
+      })
     })
   }
   
@@ -78,29 +91,29 @@ class App extends Component {
     let { temp_max } = this.state.maxTemperature;
     let { temp_min } = this.state.minTemperature;
     let { name } = this.state.cityName;
+    // let { quote } = this.state
+    console.log(this.state.quotesData)
     console.log(this.state.temperature);
+    let selectedQuotes = this.state.selectedQuotes
+    console.log(this.state.quotesData)
     // for (let i= 0; i<this.state.plannerNotes.length; i++) {
       //   console.log(this.state.plannerNotes[i])
       // };
       let  notes  = this.state.plannerNotes
       return (
         console.log(this.state.plannerNotes, "here's the state boii"),
+        
       <div>
         <Navbar/>
         <Container>
           <TopContainer>
             <Time/>
-            <Quotes/>
+            <Quotes />
              <Weather temperature={temp} maxTemperature={temp_max} minTemperature={temp_min} cityName={name}/> 
           </TopContainer>
           {/* <FullCalender/> */}
           <MidContainer>
             <ToDos/>
-            {/* {this.state.plannerNotes.map(note=>{
-              return(
-                <Notes plannerNotes = {note.note} key = {note.id} />
-              )
-            })} */}
             <Notes plannerNotes={notes}/>
 >          </MidContainer>
         </Container>

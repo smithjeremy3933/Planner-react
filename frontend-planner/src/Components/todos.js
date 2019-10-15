@@ -1,4 +1,4 @@
-import React, {Components} from 'react'
+import React, {Component} from 'react'
 import styled from "styled-components";
 
 const ToDosBox = styled.div`

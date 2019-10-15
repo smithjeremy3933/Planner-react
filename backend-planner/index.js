@@ -47,18 +47,25 @@ app.get("/api/all", cors(), (req, res) => {
     });
 });
 
+app.get("/api/quotes/all", cors(), (req, res) => {
+  var dbQuery = "SELECT * FROM Quotes";
+
+  connection.query(dbQuery, function(err, result) {
+    if (err) throw err;
+    console.log(result)
+    res.json(result);
+  });
+});
+
 
 
 app.post("/api/new", cors(), function(req, res) {
   console.log(req.body);
+  var dbQuery = "INSERT INTO Notes (note) VALUES (?)";
 
-
-  //res.end()
-  // var dbQuery = "INSERT INTO Notes (note) VALUES (?)";
-
-  //  connection.query(dbQuery, [req.body.note], function(err, result) {
-  //    if (err) throw err;
-  //    console.log("Note Successfully Saved!");
-  //    res.end();
-  //  });
+   connection.query(dbQuery, [req.body.note], function(err, result) {
+     if (err) throw err;
+     console.log("Note Successfully Saved!");
+     res.end();
+   });
 });

@@ -26,7 +26,7 @@ class Notes extends Component {
     }
 
     handleSubmit = (event) => {
-        event.preventDefault();
+        // event.preventDefault();
         let newNote ={
             note: this.state.note
         }
@@ -39,7 +39,7 @@ class Notes extends Component {
                 'Accept': 'application/json'
               }
           }).then((response) => {
-            return response.json();
+            // return response.json();
           }).then((data) => {
             console.log("Completed");
           });
@@ -57,15 +57,17 @@ class Notes extends Component {
                 <form >
                     <label>new note</label>
                     <input id="newNotes" type="text" value = {this.state.note} onChange = {e=>{this.setState({note:e.target.value})}}></input>
-                    <button onClick={this.handleSubmit}>submit</button>
+                    <button id="noteButton" class="btn btn-primary" onClick={this.handleSubmit}>submit</button>
                 </form>
                 {plannerNotes.map(note=>{
                     return(
-                        <h1 key = {note.id}>
+                        <h5 key = {note.id}>
                             {note.note}
-                        </h1>
+                        </h5>
                     )
                 })}
+
+                
             </NotesBox>
      
         )

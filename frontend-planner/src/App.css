@@ -26,3 +26,7 @@ body {
   background: url("desert.jpg");
   background-size: cover;
 }
+
+#noteButton {
+  height: 35px;
+}
