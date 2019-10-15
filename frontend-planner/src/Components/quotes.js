@@ -21,14 +21,16 @@ class Quotes extends Component {
         super(props);
     }
     state= {
-        quotes: ""
+        quote: ""
     }
     render() {
 
     let {selectedQuotes} = this.props;
+    console.log(this.props)
     return(
         <QuotesBox>
-            <h2>Quote: <span id="quotesTarget"></span></h2>
+            <h2>Quote: {selectedQuotes}<span id="quotesTarget"></span></h2>
+            <h4>Author: </h4>
         </QuotesBox>
     )
     }

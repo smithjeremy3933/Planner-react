@@ -63,6 +63,7 @@ class Notes extends Component {
                     return(
                         <h5 key = {note.id}>
                             {note.note}
+                            {/* <button>hello</button> */}
                         </h5>
                     )
                 })}

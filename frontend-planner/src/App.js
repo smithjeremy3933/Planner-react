@@ -80,7 +80,8 @@ class App extends Component {
     }).then((quotesData) => {
       console.log("quote", quotesData);
       this.setState({ 
-        selectedQuotes: quotesData
+        // selectedQuotes: quotesData[Math.floor(Math.random() * quotesData.length)],
+        selectedQuotes: quotesData[Math.floor(Math.random() * quotesData.length)],
         
       })
     })
@@ -94,21 +95,23 @@ class App extends Component {
     // let { quote } = this.state
     console.log(this.state.quotesData)
     console.log(this.state.temperature);
-    let selectedQuotes = this.state.selectedQuotes
+    let quote = this.state.selectedQuotes
     console.log(this.state.quotesData)
     // for (let i= 0; i<this.state.plannerNotes.length; i++) {
       //   console.log(this.state.plannerNotes[i])
       // };
       let  notes  = this.state.plannerNotes
+      console.log(this.state.selectedQuotes)
       return (
-        console.log(this.state.plannerNotes, "here's the state boii"),
+        // console.log(this.state.plannerNotes, "here's the state boii"),
+      
         
       <div>
         <Navbar/>
         <Container>
           <TopContainer>
             <Time/>
-            <Quotes />
+            <Quotes/>
              <Weather temperature={temp} maxTemperature={temp_max} minTemperature={temp_min} cityName={name}/> 
           </TopContainer>
           {/* <FullCalender/> */}
