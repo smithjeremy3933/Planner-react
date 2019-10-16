@@ -64,18 +64,36 @@ app.get("/api/todos/all", cors(), (req, res) => {
   });
 });
 
-app.post("/api/new", cors(), function(req, res) {
+app.post("/api/notes/new", cors(), function(req, res) {
   console.log(req.body);
-  var dbQuery = "INSERT INTO Notes (note) VALUES (?)";
+  var dbQuery = "INSERT INTO notes (note) VALUES (?)";
    connection.query(dbQuery, [req.body.note], function(err, result) {
      if (err) throw err;
      console.log("Note Successfully Saved!");
      res.end();
    });
 });
-app.post("/api/delete", cors(), function(req, res){
+app.post("/api/todos/new", cors(), function(req, res) {
+  console.log(req.body);
+  var dbQuery = "INSERT INTO todos (todo_note) VALUES (?)";
+   connection.query(dbQuery, [req.body.todo_note], function(err, result) {
+     if (err) throw err;
+     console.log("Note Successfully Saved!");
+     res.end();
+   });
+});
+app.post("/api/notes/delete", cors(), function(req, res){
   console.log(req.body);
   var dbQuery = "DELETE FROM Notes WHERE id=(?)";
+  connection.query(dbQuery, [req.body.id], function(err, result) {
+    if (err) throw err;
+    console.log("Note Successfully Deleted!");
+    res.end();
+  });
+});
+app.post("/api/todos/delete", cors(), function(req, res){
+  console.log(req.body);
+  var dbQuery = "DELETE FROM todos WHERE id=(?)";
   connection.query(dbQuery, [req.body.id], function(err, result) {
     if (err) throw err;
     console.log("Note Successfully Deleted!");

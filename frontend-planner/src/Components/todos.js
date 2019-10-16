@@ -17,10 +17,12 @@ const ToDosBox = styled.div`
 class ToDos extends Component {
     constructor(props) {
         super(props)
+        this.state = {
+            todos: [],
+            submittedTodo: ""
+        }
     }
-    state = {
-        plannerToDo: [] 
-    }
+
 
     componentDidMount(){
         fetch("http://localhost:8080/api/todos/all").then((response) => {
@@ -28,7 +30,7 @@ class ToDos extends Component {
         })
         .then((data) => {
             console.log("todo Data",data);
-            this.setState({plannerToDo: data});
+            this.setState({todos: data});
         })
         //   }).then((data) => {
         //     console.log("Completed");
@@ -36,24 +38,25 @@ class ToDos extends Component {
     }
 
 
-    handleSubmit = (event) => {
-        // event.preventDefault();
-        // let toDoNote ={
-        //     note: this.state.note
-        // }
-        // console.log(toDoNote);
-        // fetch("http://localhost:8080/api/new", {
-        //     body: JSON.stringify({ note: this.state.Todos }),
-        //     method: "POST",
-        //     headers: { 
-        //         'Content-Type': 'application/json',
-        //         'Accept': 'application/json'
-        //       }
-        //   }).then((response) => {
-        //     // return response.json();
-        //   }).then((data) => {
-        //     console.log("Completed");
-        //   });
+    handleSubmitToDo = (event) => {
+        event.preventDefault();
+        let toDoNote ={
+            todo: this.state.submittedTodo
+        }
+        // alert("Test")
+        console.log(this.state.submittedTodo);
+        fetch("http://localhost:8080/api/todos/new", {
+            body: JSON.stringify({ todo_note: this.state.submittedTodo }),
+            method: "POST",
+            headers: { 
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+              }
+          }).then((response) => {
+            // return response.json();
+          }).then((data) => {
+            console.log("Completed");
+          });
             // // On success, run the following code
             // .then(function() {
         
@@ -61,9 +64,9 @@ class ToDos extends Component {
         
             // });
     }
-    handleDelete = (id) => {
+    handleDeleteToDo = (id) => {
         console.log("id", id);
-        fetch("http://localhost:8080/api/delete", {
+        fetch("http://localhost:8080/api/todos/delete", {
             body: JSON.stringify({ id: id }),
             method: "POST",
             headers: { 
@@ -77,24 +80,33 @@ class ToDos extends Component {
             window.location.reload();
           });
     }
+
+    handleChange = (event) => {
+        console.log(event.target.name)
+        console.log({[event.target.name]: event.target.value} );
+        this.setState({[event.target.name]: event.target.value} )
+    }
+
+
     render () {
-        let {plannerToDo} = this.state;
+        console.log(this.state.todos);
         return (
             <ToDosBox>
                 <form >
                     <h1>To Do List</h1>
                     <label>Enter Here</label>
-                    <input id="newNotes" type="text" value = {this.state.plannerToDo} onChange = {e=>{this.setState({plannerToDo:e.target.value})}}></input>
-                    <button id="noteButton" class="btn btn-primary" onClick={this.handleSubmit}>submit</button>
+                    <input id="newNotes" name="submittedTodo" type="text" onChange={this.handleChange}></input>
+                    <button id="noteButton" class="btn btn-primary" onClick={this.handleSubmitToDo}>submit</button> 
                 </form>
-                  {plannerToDo.map((todo)=>{
+              
+                {this.state.todos.map((todo)=>{
                     return(
                         <h5 key = {todo.id}>
                             {todo.todo_note}
-                            <button onClick={() => {this.handleDelete(todo.id)}}>Delete</button>
+                            <button onClick={() => {this.handleDeleteToDo(todo.id)}}>Delete</button>
                         </h5>
-                    )
-                })}  
+                    ) 
+                })}   
                 
             </ToDosBox>
      

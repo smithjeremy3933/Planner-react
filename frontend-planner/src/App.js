@@ -72,12 +72,12 @@ class App extends Component {
       })
     })
 
-  fetch("http://localhost:8080/api/todos")
+  fetch("http://localhost:8080/api/todos/all")
   .then((res) => {
     return res.json()
   }).then((toDoData) => {
-    console.log("toDo", toDoData);
-    console.log(toDoData[0].note)
+    // console.log("toDo", toDoData);
+    // console.log(toDoData[0].note)
     this.setState({ 
       toDoNotes: toDoData
     })
@@ -106,7 +106,7 @@ class App extends Component {
           {/* <FullCalender/> */}
           <MidContainer>
             <ToDos/>
-            <Notes plannerNotes={notes}/>
+            {/* <Notes plannerNotes={notes}/> */}
 >          </MidContainer>
         </Container>
       </div>
