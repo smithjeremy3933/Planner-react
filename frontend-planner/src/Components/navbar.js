@@ -24,7 +24,7 @@ class Navbar extends Component {
                 <h1>FamPlan</h1>
                 {/* <a class="indexLink" href="date_picker.html">About Me</a> */}
                 <Link to = "/datepicker" >
-                    Clique me!
+                    Calendar
                     </Link>
 
             </PlannerNavbar>
