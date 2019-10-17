@@ -4,17 +4,18 @@ import styled from "styled-components";
 const NotesBox = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: top;
-  line-height:  ${props => props.lineHeight || "1px"};
+  justify-content: top centered;
+  line-height:  ${props => props.lineHeight || "10px"};
   height: ${props => props.height || "500px"};
   width: ${props => props.width || "400px"};
   background: rgba(0, 180, 180, 0.8);
   border-radius: ${props => props.borderRadius || "30px"};
   padding: ${props => props.padding || "5px"}
   border: 5px;
-  border-color: grey;
+  border-color: black;
   border-style: solid;
 `
+
 
 class Notes extends Component {
     constructor(props) {
@@ -70,9 +71,9 @@ class Notes extends Component {
             <NotesBox>
                 <form >
                     <h1>Grocery List</h1>
-                    <label>Enter Here</label>
+                    <label border="Black">Enter Here</label>
                     <input id="newNotes" type="text" value = {this.state.note} onChange = {e=>{this.setState({note:e.target.value})}}></input>
-                    <button id="noteButton" class="btn btn-primary" onClick= {this.handleSubmit}>submit</button>
+                    <button id="noteButton" class="btn btn-primary" border-radius="15px" onClick= {this.handleSubmit}>submit</button>
                 </form>
                 
                 {
@@ -81,12 +82,13 @@ class Notes extends Component {
                     return(
                         <h5 key = {note.id}>
                             {note.note}
-                            <button onClick={(event) => {event.preventDefault(); this.handleDelete(note.id)}}>Delete</button>
+                            <button id="deleteButton" class="btn btn-danger" 
+                            onClick={(event) => {event.preventDefault(); this.handleDelete(note.id)}}>Delete</button>
                         </h5>
                     )})
                     :
                         <div>
-                            You don't have any notes
+                            Your all stocked up!!!
                         </div>
                 }
 
