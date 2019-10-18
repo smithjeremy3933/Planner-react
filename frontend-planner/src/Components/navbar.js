@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import styled from "styled-components";
+import {Link} from "react-router-dom";
 
 const PlannerNavbar = styled.div`
     position: relative;
@@ -21,6 +22,11 @@ class Navbar extends Component {
         return(
             <PlannerNavbar>
                 <h1>FamPlan</h1>
+                {/* <a class="indexLink" href="date_picker.html">About Me</a> */}
+                <Link to = "/datepicker" >
+                    Calendar
+                    </Link>
+
             </PlannerNavbar>
         )
     }
