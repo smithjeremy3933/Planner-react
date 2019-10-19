@@ -21,7 +21,8 @@ class Quotes extends Component {
         super(props);
     }
     state= {
-        quote: ""
+        quote: "",
+        author: ""
     }
     render() {
 
@@ -29,8 +30,8 @@ class Quotes extends Component {
     console.log(this.props)
     return(
         <QuotesBox>
-            <h2>Quote: {selectedQuotes}<span id="quotesTarget"></span></h2>
-            <h4>Author: </h4>
+            <h2 onClick = {this.props.getQuote} className = "font-italic text-center">Quote: {this.props.quoteText}<span id="quotesTarget"></span></h2>
+            <h4 onClick = {this.props.getQuote} className = "font-italic text-center">Author: {this.props.author} </h4>
         </QuotesBox>
     )
     }

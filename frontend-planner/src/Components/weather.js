@@ -1,6 +1,8 @@
 import React, {Component} from 'react'
 import styled from "styled-components";
-let currentTemp =0;
+import APIKey from "./keys"
+
+let clickedCity = "";
 
 const WeatherBox= styled.div`
   // display: flex;
@@ -10,7 +12,7 @@ const WeatherBox= styled.div`
   grid-template-rows: ${props => props.gridTemplateRows || "1fr 1fr 1fr 1fr 1fr 1fr"};
   line-height:  ${props => props.lineHeight || "1px"};
   height: ${props => props.height || "200px"};
-  width: ${props => props.width || "200px"};
+  width: ${props => props.width || "100%"};
   background: rgba(0, 180, 180, 0.8);
   border-radius: ${props => props.borderRadius || "30px"};
   padding: ${props => props.padding || "0px"}
@@ -36,7 +38,7 @@ const Button = styled.button`
 `
 
 const Input = styled.input`
-  border-radius ${props => props.borderRadius || "15px"};
+  border-radius ${props => props.borderRadius || "12px"};
   height: 30px;
   width: 80px;
   margin: 2px;
@@ -52,7 +54,6 @@ const WeatherData = styled.p`
   }
 `
 
-let APIKey = "182a37ebeb5560c2e6ed0dfd20d50298";
 let queryURL = `https://api.openweathermap.org/data/2.5/weather?q=livermore&units=imperial&appid=${APIKey}`;
 // let queryURL = `http://api.openweathermap.org/data/2.5/weather?q=${zipCode},US&APPID=${APIKey}`;
 
@@ -61,24 +62,63 @@ class Weather extends Component {
   constructor(props){
     super(props)
   }  
+  state = {
+      zipcode: 0
+  }
+  
+  handleWeatherSubmit = (event) => {
+    event.preventDefault();
+    let newZipcode = {
+      zipcode: this.state.zipcode
+    }
+    console.log(newZipcode);
+    let queryURL = `https://api.openweathermap.org/data/2.5/weather?q=${newZipcode.zipcode},US&units=imperial&appid=${APIKey}`;
+
+    fetch(queryURL).then((response) => {
+      return response.json();
+    }).then((data) => {
+        //console.log(data);
+        console.log(data.name);
+        console.log(this.state.zipcode)
+        console.log(this.state.temperature)
+        clickedCity = data.name;
+        this.setState({ 
+          // zipcode: event.target.value,
+          clickedTemperature: data.main,
+          clickedMaxTemperature: data.main,
+          clickedMinTemperature: data.main,
+          clickedCityName: data,
+        })
+    });   
+  }
+
+  handleToggle = () => {
+    this.setState({ isOn : !this.state.isOn})
+  }
+
   render(){
+    let clickedTemperature = this.props;
+    let clickedCityName = this.props
     let { cityName } = this.props
     let { temperature } = this.props
     let { maxTemperature } = this.props
     let { minTemperature } = this.props
+    console.log(this.state.zipcode)
+    console.log(this.props)
+    console.log(this.props.cityName)
     return (
         <WeatherBox>
-            <h5>Weather</h5>
+            <h5 className="text-center">Weather</h5>
             <form>
-                <Input type="text" name="zipcode"></Input>
-                <Button>New</Button>
+                <Input type="text" name="zipcode" value = {this.state.zipcode} onChange = {e=>{this.setState({zipcode:e.target.value})}}></Input>
+                <Button className="float-right" type="button" onClick={this.handleToggle} onClick={this.handleWeatherSubmit}>New</Button>
             </form>
-            <h6>{cityName}</h6>
-            <WeatherData id= "tempTargetParagraph">Current Temp: {temperature + "°F"}</WeatherData>
+            <h6 className="text-center">{this.state.isOn ? this.props.clickedCityName : this.props.cityName }</h6>
+            <WeatherData className="text-center" id= "tempTargetParagraph">Current Temp: {temperature + "°F"}</WeatherData>
             <hr></hr>
-            <WeatherData id = "maxTempTargetParagraph">Max Temp: {maxTemperature + "°F"}</WeatherData>
+            <WeatherData className="text-center" id = "maxTempTargetParagraph">Max Temp: {maxTemperature + "°F"}</WeatherData>
             <hr></hr>
-            <WeatherData id="minTempTargetParagraph">Min Temp: {minTemperature + "°F"}</WeatherData>
+            <WeatherData className="text-center" id="minTempTargetParagraph">Min Temp: {minTemperature + "°F"}</WeatherData>
          
         </WeatherBox>
 
